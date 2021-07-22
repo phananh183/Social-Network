@@ -1,0 +1,22 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div>
+        {{ profile }}
+        {{ following }} following
+        {{ followers}} followers
+
+    </div>
+
+    <div id='posts-view' class='list-group'>
+        <div class='list-group-item'>
+            <h3>All Posts</h3>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <!-- <script src="{% static 'network/post.js' %}"></script> -->
+{% endblock %}

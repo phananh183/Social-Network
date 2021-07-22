@@ -1,0 +1,30 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    {% if user.is_authenticated %}
+        <div id='new-post-view'>
+            <form id="compose-post">
+                {% csrf_token %}
+                <div class='m-3'>
+                    <textarea id="post-content" rows="3" cols="100" type='text' class='form-control' placeholder="New post here..."></textarea>
+                    <input class="btn btn-primary" type="submit" value="Post">  
+                </div>
+                
+            </form>
+        </div>
+            
+    {% endif %}
+
+    <div id='posts-view' class='list-group'>
+        <div class='list-group-item'>
+            <h3>All Posts</h3>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block script %}
+    <script type='module' src="{% static 'network/post.js' %}"></script>
+{% endblock %}

@@ -32,25 +32,25 @@ export function loadAllPost() {
 
 //to create hmtl elements for a post
 export function createPost(post) {
-    postItem = document.createElement('a')
+    var postItem = document.createElement('a')
     postItem.href = "#"
     postItem.className = "list-group-item"
 
-    div1 = document.createElement('div')
+    var div1 = document.createElement('div')
     div1.className = "d-flex w-100 justify-content-between"
 
-    poster = document.createElement('a')
+    var poster = document.createElement('a')
     poster.className = "mb-1"
     poster.href = `/user/${post.posterID}`
     poster.innerHTML = post.poster
-    timestamp = document.createElement('small')
+    var timestamp = document.createElement('small')
     timestamp.innerHTML = post.timestamp
     div1.append(poster, timestamp)
 
-    content = document.createElement('p')
+    var content = document.createElement('p')
     content.className = "mb-1"
     content.innerHTML = post.content
-    likes = document.createElement('small')
+    var likes = document.createElement('small')
     likes.innerHTML = `${post.likes} likes`
 
     postItem.append(div1, content, likes)

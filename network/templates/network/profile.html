@@ -2,14 +2,29 @@
 {% load static %}
 
 {% block body %}
-    <div>
-        {{ profile }}
-        {{ following }} following
-        {{ followers}} followers
+    <div class="container">
+        <div class="row">
+            <div class="col-align-self-start">
+                <h4>{{ profile }}</h4>
+                {% if user.id != profile.id %}
+                    {% if toggleFollow %}
+                        <button id="follow-button" class="btn btn-primary">Unfollow</button>
+                    {% else %}
+                        <button id="follow-button" class="btn btn-primary">Follow</button>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-center">
+                {{ following }} following
+                {{ followers }} followers
+            </div>
+        </div>
 
     </div>
 
-    <div id='posts-view' class='list-group'>
+    <div id='posts-view-by-profile' class='list-group'>
         <div class='list-group-item'>
             <h3>All Posts</h3>
         </div>
@@ -18,5 +33,6 @@
 {% endblock %}
 
 {% block script %}
-    <!-- <script src="{% static 'network/post.js' %}"></script> -->
+    <script type= 'module' src="{% static 'network/profile.js' %}"></script>
+    <script>window.profileID={{ profile.id }}</script>
 {% endblock %}

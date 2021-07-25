@@ -19,8 +19,16 @@ def showPost(request):
     posts = Post.objects.order_by('-timestamp').all()
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
+def showPostByProfile(request, profile_id):
+    profile = User.objects.get(id=profile_id)
+    posts = Post.objects.filter(poster=profile).order_by('-timestamp').all()
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
 def profile(request, profile_id):
     profile = User.objects.get(pk=profile_id)
+
+    #check if user is following profile
+    toggleFollow = Following.objects.filter(user=request.user).filter(followed=profile).exists()
     
     #number of users that account is follwing
     following = len(Following.objects.filter(user=profile))
@@ -30,8 +38,28 @@ def profile(request, profile_id):
     return render(request, "network/profile.html", {
         "profile": profile,
         "following": following,
-        "followers": followers
+        "followers": followers,
+        "toggleFollow": toggleFollow
     })
+
+@csrf_exempt
+@login_required
+def toggleFollow(request, profile_id):
+    #Toggle follow must be done through a POST request
+    if request.method != 'POST':
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    profile = User.objects.get(id=profile_id)
+    followObject = Following.objects.filter(user=request.user).filter(followed=profile)
+    
+    if followObject.exists():
+        followObject.delete()
+        return JsonResponse({"meassage": "Toggled follow." }, status=201)
+
+    else:
+        newFollow = Following(user=request.user, followed=profile)
+        newFollow.save()
+        return JsonResponse({"meassage": "Toggled follow." }, status=201)
 
 @csrf_exempt
 @login_required

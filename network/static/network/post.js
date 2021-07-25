@@ -21,17 +21,17 @@ function post() {
     loadAllPost()
 }
 
-export function loadAllPost() {
+function loadAllPost() {
     fetch('/posts')
     .then(response => response.json())
     .then(posts => {
         console.log(posts);
-        posts.forEach(post => createPost(post))
+        posts.forEach(post => createPost(post, '#posts-view'))
     })
 }
 
 //to create hmtl elements for a post
-export function createPost(post) {
+export function createPost(post, div_id) {
     var postItem = document.createElement('a')
     postItem.href = "#"
     postItem.className = "list-group-item"
@@ -54,7 +54,5 @@ export function createPost(post) {
     likes.innerHTML = `${post.likes} likes`
 
     postItem.append(div1, content, likes)
-    document.querySelector('#posts-view').append(postItem)
+    document.querySelector(div_id).append(postItem)
 }
-
-// export { createPost, loadAllPost }

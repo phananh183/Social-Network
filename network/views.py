@@ -19,6 +19,11 @@ def showPost(request):
     posts = Post.objects.order_by('-timestamp').all()
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
+def showPostByProfile(request, profile_id):
+    profile = User.objects.get(id=profile_id)
+    posts = Post.objects.filter(poster=profile).order_by('-timestamp').all()
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
 def profile(request, profile_id):
     profile = User.objects.get(pk=profile_id)
     

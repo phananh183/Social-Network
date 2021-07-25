@@ -1,5 +1,12 @@
-// import {loadAllPost, createPost } from "./post.js"
+import { createPost } from "./post.js"
 
-// document.addEventListener("DOMContentLoaded", loadAllPost())
+document.addEventListener("DOMContentLoaded",() => loadPost(window.profileID))
 
-console.log('profile page')
+function loadPost(profile_id) {
+    fetch(`/posts/${profile_id}`)
+    .then(request => request.json())
+    .then(posts => {
+        console.log(posts);
+        posts.forEach(post => createPost(post, '#posts-view-by-profile'))
+    })
+}

@@ -24,6 +24,27 @@ def showPostByProfile(request, profile_id):
     posts = Post.objects.filter(poster=profile).order_by('-timestamp').all()
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
+def followingData(request):
+
+    #get get list of people user is following
+    followings = Following.objects.filter(user=request.user)
+    
+    #add all posts of people user is following
+    posts = []
+    for follow in followings:
+        for post in list(Post.objects.filter(poster=follow.followed)):
+            posts.append(post)
+    
+    #sort post by timestamp, most recent post first
+    posts.sort(key=lambda x: x.timestamp, reverse=True)
+    
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
+def following(request):
+    return render(request, "network/following.html")
+
+
+
 def profile(request, profile_id):
     profile = User.objects.get(pk=profile_id)
 

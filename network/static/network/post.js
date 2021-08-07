@@ -2,11 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //By default, load all posts
     loadAllPost();
     document.querySelector('#compose-post').onsubmit = post;
-
-
-    //Add event listener for 'following' button
-
-})
+    })
 
 function post() {
     const content = document.querySelector('#post-content').value
